@@ -15,18 +15,30 @@ export class ProductoService {
 	getProductById(id:number):Producto {
 		return this.productos.find(producto=>producto.id === id)
 	}
-	newProductById(producto:Producto):Producto {
-			return this.productos[0]
+	newProductById(producto):Producto {
+			producto.id = this.productos[this.productos.length -1 ].id +1
+			// producto.id = this.productos[this.productos.length -1 ].id
+			// console.log({id:3,nombre:'fiat',descripcion:'para andar',codigo:'20x200',foto:'www.google.com',precio:1200,stock:200})
+			this.productos.push(producto)
+			return producto
 		// return this.productos.find(producto=>producto.id === id)
 	}
-	updateProductById(id:number, producto:Producto):Producto {
-			return this.productos[0]
+	updateProductById(id:number, producto):Producto {
+			producto.id = id
+			let index = this.productos.findIndex(producto=>producto.id === id)
+			this.productos[index]= {...producto}
+			return producto
 		// return this.productos.find(producto=>producto.id === id)
 	}
 
 	deleteProductById(id:number):boolean {
 			// return this.productos[0]
-			return true
+			const index = this.productos.findIndex(producto=>producto.id === id)
+			if(index != -1 ){
+				this.productos.splice(index,1)
+				return true
+			}
+			return false
 		// return this.productos.find(producto=>producto.id === id)
 	}
 
